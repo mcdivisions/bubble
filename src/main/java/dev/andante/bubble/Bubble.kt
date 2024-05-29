@@ -28,13 +28,13 @@ object Bubble : ModInitializer {
     const val MOD_NAME = "Bubble"
 
     val LOGGER: Logger = LoggerFactory.getLogger(MOD_ID)
-    val DEFAULT_DIMENSION_TYPE: RegistryKey<DimensionType> = RegistryKey.of(RegistryKeys.DIMENSION_TYPE, Identifier(MOD_ID, "default"))
+    val DEFAULT_DIMENSION_TYPE: RegistryKey<DimensionType> = RegistryKey.of(RegistryKeys.DIMENSION_TYPE, Identifier.of(MOD_ID, "default"))
 
     override fun onInitialize() {
         LOGGER.info("Initializing $MOD_NAME")
 
         // chunk generator
-        Registry.register(Registries.CHUNK_GENERATOR, Identifier(MOD_ID, "void"), VoidChunkGenerator.CODEC)
+        Registry.register(Registries.CHUNK_GENERATOR, Identifier.of(MOD_ID, "void"), VoidChunkGenerator.CODEC)
 
         // initialize
         BubbleManager

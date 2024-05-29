@@ -14,6 +14,7 @@ import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.SimpleRegistry
 import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.registry.entry.RegistryEntryInfo
 import net.minecraft.server.MinecraftServer
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.Vec3d
@@ -22,6 +23,7 @@ import net.minecraft.world.dimension.DimensionOptions
 import net.minecraft.world.dimension.DimensionType
 import net.minecraft.world.gen.chunk.ChunkGenerator
 import java.io.IOException
+import java.util.Optional
 import java.util.UUID
 
 /**
@@ -50,7 +52,7 @@ class BubbleManager private constructor(private val server: MinecraftServer) {
          */
         identifier: Identifier = run {
             val uuid = UUID.randomUUID()
-            Identifier(Bubble.MOD_ID, "temp_world_$uuid")
+            Identifier.of(Bubble.MOD_ID, "temp_world_$uuid")
         },
 
         /**
@@ -135,7 +137,7 @@ class BubbleManager private constructor(private val server: MinecraftServer) {
         val removable = dimensionsRegistry as RemovableSimpleRegistry<*>
         val wasFrozen = removable.isFrozen
         removable.isFrozen = false
-        dimensionsRegistry.add(RegistryKey.of(RegistryKeys.DIMENSION, key.value), world.worldDimensionOptions, Lifecycle.stable())
+        dimensionsRegistry.add(RegistryKey.of(RegistryKeys.DIMENSION, key.value), world.worldDimensionOptions, RegistryEntryInfo(Optional.empty(), Lifecycle.stable()))
         removable.isFrozen = wasFrozen
 
         // add to server worlds

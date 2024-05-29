@@ -1,7 +1,7 @@
 package dev.andante.bubble.world.property
 
 import com.mojang.datafixers.util.Pair
-import com.mojang.serialization.Codec
+import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.entity.SpawnGroup
 import net.minecraft.registry.DynamicRegistryManager
@@ -34,7 +34,6 @@ import net.minecraft.world.gen.chunk.placement.StructurePlacementCalculator
 import net.minecraft.world.gen.noise.NoiseConfig
 import net.minecraft.world.gen.structure.Structure
 import java.util.concurrent.CompletableFuture
-import java.util.concurrent.Executor
 import java.util.function.Function
 import java.util.stream.Stream
 
@@ -43,7 +42,7 @@ class VoidChunkGenerator(private val biome: RegistryEntry<Biome>) : ChunkGenerat
         registry.getEntry(biome).orElseThrow { IllegalArgumentException("Could not fetch biome ${biome.value}") }
     )
 
-    override fun getCodec(): Codec<out ChunkGenerator> {
+    override fun getCodec(): MapCodec<out ChunkGenerator> {
         return CODEC
     }
 
@@ -59,10 +58,10 @@ class VoidChunkGenerator(private val biome: RegistryEntry<Biome>) : ChunkGenerat
     }
 
     override fun addStructureReferences(world: StructureWorldAccess, accessor: StructureAccessor, chunk: Chunk) {}
+
     override fun populateNoise(
-        executor: Executor,
         blender: Blender,
-        config: NoiseConfig,
+        noiseConfig: NoiseConfig,
         structureAccessor: StructureAccessor,
         chunk: Chunk
     ): CompletableFuture<Chunk> {
@@ -136,7 +135,7 @@ class VoidChunkGenerator(private val biome: RegistryEntry<Biome>) : ChunkGenerat
     }
 
     companion object {
-        val CODEC: Codec<VoidChunkGenerator> = RecordCodecBuilder.create { instance ->
+        val CODEC: MapCodec<VoidChunkGenerator> = RecordCodecBuilder.mapCodec { instance ->
             instance.group(
                 Biome.REGISTRY_CODEC.stable()
                     .fieldOf("biome")
