@@ -41,7 +41,7 @@ public abstract class SimpleRegistryMixin<T> implements RemovableSimpleRegistry<
         }
 
         try {
-            this.rawIdToEntry.set(rawId, null);
+            this.rawIdToEntry.remove(rawId);
             RegistryKey<T> key = entry.registryKey();
             this.idToEntry.remove(key.getValue());
             this.keyToEntry.remove(key);

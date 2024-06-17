@@ -6,8 +6,8 @@
   "version": "${version}",
   "environment": "*",
   "depends": {
-    "fabricloader": ">=0.14",
-    "minecraft": ">=1.21-beta"
+    "fabricloader": ">=0.15",
+    "minecraft": ">=1.21"
   },
   "entrypoints": {
     "main": [
