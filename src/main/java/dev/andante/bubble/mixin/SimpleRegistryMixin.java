@@ -35,7 +35,7 @@ public abstract class SimpleRegistryMixin<T> implements RemovableSimpleRegistry<
     @Override
     public boolean remove(T value) {
         RegistryEntry.Reference<T> entry = this.valueToEntry.get(value);
-        int rawId = this.entryToRawId.removeInt(value);
+        int rawId = this.entryToRawId.removeInt(value) - 1;
         if (rawId == -1) {
             return false;
         }
